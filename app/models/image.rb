@@ -1,10 +1,20 @@
+
 class Image < ActiveRecord::Base
  def img=(file)
+   #upload image file to 'app/assets/images'
    name = file.original_filename
    data = file.read
-   directory = "app/assets/images"
+   directory = 'app/assets/images/'
    path = File.join(directory,name)
-   self.title = name
    File.open(path,"wb") { |f| f.write(data) }
+   
+   @title = self.title = name
+   #resize image  
+   width, height = 50, 50
+   original_image = Magick::Image.read(directory<<@title).first
+   resize_image = original_image.resize(width, height)
+   #save resize image
+   resize_image.write('app/assets/images/resize'<<@title)
+
  end
 end

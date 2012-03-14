@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'RMagick'
+
 class ImageController < ApplicationController
  def index
   respond_to do |format|
@@ -19,6 +22,15 @@ class ImageController < ApplicationController
       if @image.save
         format.html { redirect_to @image, :notice => 'Image was successfully uploaded.' }
       end
+    end
+ end
+
+ def destroy
+    @image = Image.find(params[:id])
+    @image.destroy
+
+    respond_to do |format|
+      format.html { redirect_to image_url }
     end
  end
 end
