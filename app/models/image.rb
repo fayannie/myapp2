@@ -1,5 +1,6 @@
 
 class Image < ActiveRecord::Base
+ Image.set_primary_key "title"
  def img=(file)
    #upload image file to 'app/assets/images'
    name = file.original_filename
@@ -15,6 +16,5 @@ class Image < ActiveRecord::Base
    resize_image = original_image.resize(width, height)
    #save resize image
    resize_image.write('app/assets/images/resize'<<@title)
-
- end
+  end
 end
